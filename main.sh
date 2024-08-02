@@ -67,6 +67,6 @@ key='/КогдаВериф?'
 bash "/root/humancheck/humancheck.sh"  -$key
 sleep 5
 
-key='/Ссылка?'
+key='/Ссылка'
 
 bash "/root/humancheck/humancheck.sh"  -$key
