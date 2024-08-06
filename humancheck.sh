@@ -15,20 +15,31 @@ function sendMessage()
 if [[ "${1}" = "1" ]]; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Аутентификация не пройдена!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 		sleep 1
+		curl -F chat_id=$mchat -F document=@"/root/humancheck/notactive.gif" https://api.telegram.org/bot$token/sendDocument
+		sleep 1
 		send_verif_link
 elif  [[ "${1}" = "2" ]] ; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Тревога! Волк унес зайчат (статус не получен) '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 elif  [[ "${1}" = "3" ]] ; then
+	datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
+	if [[ "${datatoverif}" = "Inactive" ]] ; then
+		message=1
+		sendMessage $message
+	elif  [[ "${datatoverif}" < "1" ]] ; then
+		message=2
+		sendMessage $message
+	else 
 	timeverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
 	let "timeverif=${timeverif}/1000"
 	timeverif=$(TZ='Europe/Moscow' date -d @$timeverif   +%d%t%B%t%T )
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Следующая аутентификации будет '"$timeverif"'" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+	fi
 fi
 }
 
 #функция проверки времени до аутентификации
 function  time_do_verif
-{
+{ 
 	datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
 	if [[ "${datatoverif}" = "Inactive" ]] ; then
 		message=1
@@ -43,7 +54,7 @@ function  time_do_verif
 		sleep 1
 		datenow=$(TZ='Europe/Moscow' date  +%s)
 		let "DIFF=((${datatoverif} - ${datenow})/3600)" #60 -минут 3600 -часов
-		echo $DIFF " часов"
+		echo $DIFF > "/root/humancheck/time.properties" 
 	fi
 }
 
@@ -68,8 +79,13 @@ function check_parametr
 function send_verif_link
 {
 cd "/root/.humanode/workspaces/default/"
+tunel=$(./humanode-websocket-tunnel) &
 link=$(./humanode-peer bioauth  auth-url --rpc-url-ngrok-detect --chain chainspec.json) 
+if  [[ "${link}" > "1" ]] ; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Cсылка на аутентификацию - '"$link"'" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+else 
+	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Тунель не открыт" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+fi
 }
 # функция для тестирования
 function test
@@ -86,8 +102,9 @@ check_parametr
 
 
 case "$1" in 
--'/КогдаВериф?') sendMessage 3;;
--'/Ссылка') send_verif_link;;
+-'/Data') sendMessage 3;;
+-'/Link') send_verif_link;;
+-'/Check') time_do_verif;;
 *) echo bezkey;;
 esac
 
