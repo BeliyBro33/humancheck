@@ -1,6 +1,7 @@
 rm -r  "/root/humancheck/humancheck.sh" &&  rm -r "/root/humancheck/main.sh"
 
 git clone https://github.com/BeliyBro33/humancheck.git
+
 chmod +x "/root/humancheck/main.sh"
 
 
