@@ -1,0 +1,12 @@
+[Unit]
+Description=Humancheck
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/humancheck/
+ExecStart=/root/humancheck/main.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target 

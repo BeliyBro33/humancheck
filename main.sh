@@ -2,8 +2,8 @@
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
-token=$(sudo cat "${HOME}/humancheck/token.properties")
-mchat=$(sudo cat "${HOME}/humancheck/mchat.properties")
+token=$(sudo cat "/root/humancheck/token.properties")
+mchat=$(sudo cat "/root/humancheck/mchat.properties")
 #Ключи 
 #'/Link' - получить ссылку на верификацию
 #'/Data' - получить дату аутентификации
@@ -64,7 +64,7 @@ get_update &
 for (( ;; )); do
 #в цикле проверяем сколько часов осталось до аутентификации
 bash "/root/humancheck/humancheck.sh"  -'/Check'
-timehours=$(sudo cat "${HOME}/humancheck/time.properties")
+timehours=$(sudo cat "/root/humancheck/time.properties")
 echo -e "${GREEN} $timehours часов ${NC}"
 #если времени меньше 2 часов переходим на поминутное сканирование
 if [[ "${timehours}" = "1" ]] ; then

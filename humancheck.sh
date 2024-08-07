@@ -3,10 +3,11 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 sleep 1
-mchat=$(sudo cat "${HOME}/humancheck/mchat.properties")
+token=$(sudo cat "/root/humancheck/token.properties")
+mchat=$(sudo cat "/root/humancheck/mchat.properties")
 schat='-1001500189369'
-token=$(sudo cat "${HOME}/humancheck/token.properties")
-name=$(sudo cat "${HOME}/.humanode/workspaces/default/workspace.json" | jq -r .nodename)
+stoken='5434189022:AAFRApdxpp9kahgO5C6OTUyyxxBarEqSUnU'
+name=$(sudo cat "/root/.humanode/workspaces/default/workspace.json" | jq -r .nodename)
 ip=$(wget -qO - eth0.me)
 
 #функция отправки сообщений
@@ -19,7 +20,7 @@ if [[ "${1}" = "1" ]]; then
 		sleep 1
 		send_verif_link
 elif  [[ "${1}" = "2" ]] ; then
-	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Тревога! Волк унес зайчат (статус не получен) '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Тревога! Волк унес зайчат (статус не получен) '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
 elif  [[ "${1}" = "3" ]] ; then
 	datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
 	if [[ "${datatoverif}" = "Inactive" ]] ; then
