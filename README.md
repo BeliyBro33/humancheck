@@ -12,7 +12,23 @@ echo -e $mchat	> "/root/humancheck/mchat.properties"
 
 echo -e $token	> "/root/humancheck/token.properties"
 
+echo "[Unit]
 
+Description=Humancheck
+
+After=network.target
+
+[Service]
+
+Type=simple
+
+ExecStart=$HOME/humancheck/main.sh
+
+Restart=always
+
+[Install]
+
+WantedBy=multi-user.target" > /root/human.service
 
 
 sudo mv /root/human.service /etc/systemd/system
