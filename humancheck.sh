@@ -16,9 +16,11 @@ function sendMessage()
 if [[ "${1}" = "1" ]]; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Аутентификация не пройдена!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 		sleep 1
+		if [[ "${gendalf}" = "0" ]]; then
 		curl -F chat_id=$mchat -F document=@"/root/humancheck/notactive.gif" https://api.telegram.org/bot$token/sendDocument
-		sleep 1
-		send_verif_link
+		gendalf='1'
+		echo $gendalf > "/root/humancheck/time.properties" 
+		fi
 elif  [[ "${1}" = "2" ]] ; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Тревога! Волк унес зайчат (статус не получен) '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
 elif  [[ "${1}" = "3" ]] ; then
@@ -59,23 +61,6 @@ function  time_do_verif
 	fi
 }
 
-#функция проверки всех переменных бота и чата
-function check_parametr
-{
-	sleep 1
-	if [[ "${mchat}" < "1" ]] ; then
-	echo "Не задан ИД чата! Введите ИД чата:"
-	read mchat 
-	echo -e $mchat	> "/root/humancheck/mchat.properties"
-	fi
-	sleep 1
-	if [[ "${token}" < "1" ]] ; then
-	echo "Не задан токен бота! Введите токен бота:"
-	read token 
-	echo -e $token	> "/root/humancheck/token.properties"
-	fi
-}
-
 #функция для отправки ссылки на утентификацию
 function send_verif_link
 {
@@ -88,19 +73,6 @@ else
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Тунель не открыт" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 fi
 }
-# функция для тестирования
-function test
-{
-mes=123
-curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "-1001500189369", "text": "'"$mes"'": false}' https://api.telegram.org/bot5434189022:AAFRApdxpp9kahgO5C6OTUyyxxBarEqSUnU/sendMessage
-}
-#вызов функции проверки всех переменных бота и чата
-check_parametr
-#цикл
-#for (( ;; )); do
-#вызов функции
-
-
 
 case "$1" in 
 -'/Data') sendMessage 3;;
@@ -110,4 +82,4 @@ case "$1" in
 esac
 
 sleep 2
-#done
+

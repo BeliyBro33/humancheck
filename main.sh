@@ -4,14 +4,12 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 token=$(sudo cat "/root/humancheck/token.properties")
 mchat=$(sudo cat "/root/humancheck/mchat.properties")
+gendalf=$(sudo cat "/root/humancheck/gendalf.properties")
+echo $gendalf
 #Ключи 
 #'/Link' - получить ссылку на верификацию
 #'/Data' - получить дату аутентификации
 #'/Check' - для проверки времени до аутентификации
-#
-#
-#
-#
 #
 
 #функция проверки всех переменных бота и чата
@@ -20,14 +18,10 @@ function check_parametr
 	sleep 1
 	if [[ "${mchat}" < "1" ]] ; then
 	echo "Не задан ИД чата! Введите ИД чата:"
-	read mchat 
-	echo -e $mchat	> "/root/humancheck/mchat.properties"
 	fi
 	sleep 1
 	if [[ "${token}" < "1" ]] ; then
 	echo "Не задан токен бота! Введите токен бота:"
-	read token 
-	echo -e $token	> "/root/humancheck/token.properties"
 	fi
 }
 
@@ -68,12 +62,12 @@ timehours=$(sudo cat "/root/humancheck/time.properties")
 echo -e "${GREEN} $timehours часов ${NC}"
 #если времени меньше 2 часов переходим на поминутное сканирование
 if [[ "${timehours}" = "1" ]] ; then
-	datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
+		#поминутное сканирование
+		for (( ;; )); do
+		datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
 		let "datatoverif=${datatoverif}/1000"
 		datatoverif=$(TZ='Europe/Moscow' date -d @$datatoverif  +%s )
 		sleep 1
-		#поминутное сканирование
-		for (( ;; )); do
 		datenow=$(TZ='Europe/Moscow' date  +%s)
 		let "DIFF=((${datatoverif} - ${datenow})/60)"
 		echo  -e "${GREEN} $DIFF минут ${NC} " 
@@ -82,7 +76,7 @@ if [[ "${timehours}" = "1" ]] ; then
 				curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Аутентификация начнется через 5 минут . Ссылку скоро получите" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 			elif [[ "${DIFF}" = "1" ]] ; then
 				curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "До аутентификации 1 минута, через минуту пришлю ссылку" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
-				sleep 60
+				sleep 90
 				bash "/root/humancheck/humancheck.sh"  -'/Link'
 			elif [[ "${DIFF}" < "1" ]] ; then
 				 sleep 300
@@ -91,6 +85,7 @@ if [[ "${timehours}" = "1" ]] ; then
 					if   [[ "${timehours}" > "100" ]]; then
 					curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Успех!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 					echo  -e "${GREEN} Успех! ${NC} " 
+					gendalf='0'
 					break 1
 					fi
 			fi
