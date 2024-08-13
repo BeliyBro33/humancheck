@@ -9,6 +9,7 @@ schat='-1001500189369'
 stoken='5434189022:AAFRApdxpp9kahgO5C6OTUyyxxBarEqSUnU'
 name=$(sudo cat "/root/.humanode/workspaces/default/workspace.json" | jq -r .nodename)
 ip=$(wget -qO - eth0.me)
+gendalf=$(sudo cat "/root/humancheck/gendalf.properties")
 
 #функция отправки сообщений
 function sendMessage()
