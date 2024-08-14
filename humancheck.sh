@@ -20,7 +20,7 @@ if [[ "${1}" = "1" ]]; then
 		if [[ "${gendalf}" = "0" ]]; then
 		curl -F chat_id=$mchat -F document=@"/root/humancheck/notactive.gif" https://api.telegram.org/bot$token/sendDocument
 		gendalf='1'
-		echo $gendalf > "/root/humancheck/time.properties" 
+		echo $gendalf > "/root/humancheck/gendalf.properties" 
 		fi
 elif  [[ "${1}" = "2" ]] ; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Тревога! Волк унес зайчат (статус не получен) '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
@@ -79,6 +79,7 @@ case "$1" in
 -'/Data') sendMessage 3;;
 -'/Link') send_verif_link;;
 -'/Check') time_do_verif;;
+-'/Pora') sendMessage 1;;
 *) echo bezkey;;
 esac
 

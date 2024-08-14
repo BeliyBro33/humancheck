@@ -10,7 +10,7 @@ echo $gendalf
 #'/Link' - получить ссылку на верификацию
 #'/Data' - получить дату аутентификации
 #'/Check' - для проверки времени до аутентификации
-#
+#'/Pora' - для получения сообщения что аутентификация не пройдена
 
 #функция проверки всех переменных бота и чата
 function check_parametr
@@ -53,7 +53,6 @@ curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update_id
 done
 } 
 
-
 get_update &
 for (( ;; )); do
 #в цикле проверяем сколько часов осталось до аутентификации
@@ -67,7 +66,6 @@ if [[ "${timehours}" = "1" ]] ; then
 		datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
 		let "datatoverif=${datatoverif}/1000"
 		datatoverif=$(TZ='Europe/Moscow' date -d @$datatoverif  +%s )
-		sleep 1
 		datenow=$(TZ='Europe/Moscow' date  +%s)
 		let "DIFF=((${datatoverif} - ${datenow})/60)"
 		echo  -e "${GREEN} $DIFF минут ${NC} " 
@@ -79,18 +77,25 @@ if [[ "${timehours}" = "1" ]] ; then
 				sleep 90
 				bash "/root/humancheck/humancheck.sh"  -'/Link'
 			elif [[ "${DIFF}" < "1" ]] ; then
-				 sleep 300
-				 bash "/root/humancheck/humancheck.sh"  -'/Check'
-				 timehours=$(sudo cat "${HOME}/humancheck/time.properties")
-					if   [[ "${timehours}" > "100" ]]; then
-					curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Успех!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
-					echo  -e "${GREEN} Успех! ${NC} " 
-					gendalf='0'
-					break 1
+				for (( ;; )); do
+				echo v minutnom cikle
+					sleep 300
+					datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
+					echo $datatoverif - до верификацию
+					if [[ "${datatoverif}" = "Inactive" ]] ; then
+						bash "/root/humancheck/humancheck.sh"  -'/Pora'
+					else
+						curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Успех!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+						echo  -e "${GREEN} Успех! ${NC} " 
+						gendalf='0'
+						echo $gendalf > "/root/humancheck/gendalf.properties" 
+						break 2
 					fi
+				done
 			fi
 		sleep 60
 		done
 fi	
+echo vishel
 sleep 3600
 done
