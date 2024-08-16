@@ -5,7 +5,6 @@ NC='\033[0m' # No Color
 token=$(sudo cat "/root/humancheck/token.properties")
 mchat=$(sudo cat "/root/humancheck/mchat.properties")
 gendalf=$(sudo cat "/root/humancheck/gendalf.properties")
-echo $gendalf
 #Ключи 
 #'/Link' - получить ссылку на верификацию
 #'/Data' - получить дату аутентификации
@@ -16,11 +15,11 @@ echo $gendalf
 function check_parametr
 {
 	sleep 1
-	if [[ "${mchat}" < "1" ]] ; then
+	if [[ "${#mchat}" < "1" ]] ; then
 	echo "Не задан ИД чата! Введите ИД чата:"
 	fi
 	sleep 1
-	if [[ "${token}" < "1" ]] ; then
+	if [[ "${#token}" < "1" ]] ; then
 	echo "Не задан токен бота! Введите токен бота:"
 	fi
 }
@@ -63,26 +62,28 @@ echo -e "${GREEN} $timehours часов ${NC}"
 if [[ "${timehours}" = "1" ]] ; then
 		#поминутное сканирование
 		for (( ;; )); do
-		datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
-		let "datatoverif=${datatoverif}/1000"
-		datatoverif=$(TZ='Europe/Moscow' date -d @$datatoverif  +%s )
-		datenow=$(TZ='Europe/Moscow' date  +%s)
-		let "DIFF=((${datatoverif} - ${datenow})/60)"
-		echo  -e "${GREEN} $DIFF минут ${NC} " 
+			datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
+			let "datatoverif=${datatoverif}/1000"
+			datatoverif=$(TZ='Europe/Moscow' date -d @$datatoverif  +%s )
+			datenow=$(TZ='Europe/Moscow' date  +%s)
+			let "DIFF=((${datatoverif} - ${datenow})/60)"
+			echo  -e "${GREEN} $DIFF минут ${NC} " 
 			#если меньше 5 минут
 			if [[ "${DIFF}" = "5" ]] ; then
+				echo 5 minut
 				curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Аутентификация начнется через 5 минут . Ссылку скоро получите" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 			elif [[ "${DIFF}" = "1" ]] ; then
+				echo 1 minuta
 				curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "До аутентификации 1 минута, через минуту пришлю ссылку" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 				sleep 90
 				bash "/root/humancheck/humancheck.sh"  -'/Link'
-			elif [[ "${DIFF}" < "1" ]] ; then
 				for (( ;; )); do
-				echo v minutnom cikle
+					echo v konecnom cikle
 					sleep 300
 					datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
 					echo $datatoverif - до верификацию
 					if [[ "${datatoverif}" = "Inactive" ]] ; then
+						echo pora
 						bash "/root/humancheck/humancheck.sh"  -'/Pora'
 					else
 						curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Успех!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
@@ -92,8 +93,8 @@ if [[ "${timehours}" = "1" ]] ; then
 						break 2
 					fi
 				done
-			fi
-		sleep 60
+			fi		
+			sleep 60
 		done
 fi	
 echo vishel
