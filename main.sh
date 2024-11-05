@@ -42,19 +42,15 @@ text=$(echo "${var}" | jq -r ".result[0].message.text")
 update_id=$( echo "${var}" | jq -r ".result[0].update_id")
 let "update_id=${update_id}+1"
 chek_text=${text::1}
-echo "$text"
 sleep 2
 	if [ "$chek_text" = "/" ]; then
-	
 		if	 [ "$text" = "/Link" ]; then
 		bash "/root/humancheck/humancheck.sh"  -'/Link'
 		elif  [ "$text" = "/Data" ]; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
-   	elif  [ "$text" = "/Update" ]; then
-   		 update=$update_id
+   		elif  [ "$text" = "/Update" ]; then
+   		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
-  cat "/root/humancheck/update.properties"
-  sleep 5
 		bash "/root/humancheck/humancheck.sh"  -'/Update'
 		fi
 	else 
@@ -62,10 +58,8 @@ sleep 2
 	fi
 sleep 2
 curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update_id
-echo "get_update"
 done
 } 
-
 get_update &
 for (( ;; )); do
 #в цикле проверяем сколько часов осталось до аутентификации
