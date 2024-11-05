@@ -83,7 +83,7 @@ echo "Done"
 curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Обновление выполнено!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 sleep 2
 if [[ "${update}" = "1" ]] ; then
-	update='0'
+	update='2'
 	echo $update > "/root/humancheck/update.properties" 
  echo "Update-"
  sleep 1
