@@ -48,6 +48,8 @@ sleep 2
    	elif  [ "$text" = "/Update" ]; then
    		 update='1'
 		echo $update > "/root/humancheck/update.properties"
+  cat "/root/humancheck/update.properties"
+  sleep 5
 		bash "/root/humancheck/humancheck.sh"  -'/Update'
 		fi
 	else 
