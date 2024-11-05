@@ -68,8 +68,11 @@ function  update
 sudo rm -r  "/root/humancheck/main.sh"
 sudo rm -r  "/root/humancheck/humancheck.sh"
   echo "try to update"
+  sleep 1
   cd "/root/humancheck/"
+  sleep 1
   git pull
+  sleep 2
   cd -
   chmod +x "/root/humancheck/main.sh"
 echo "Done"
