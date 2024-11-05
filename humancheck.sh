@@ -82,7 +82,7 @@ echo "Done"
 curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Обновление выполнено!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 sleep 2
 echo "щас рестартну"
-sudo systemctl restart human
+
 }
 
 #функция для отправки ссылки на утентификацию
