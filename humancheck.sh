@@ -82,9 +82,11 @@ sudo rm -r  "/root/humancheck/humancheck.sh"
 echo "Done"
 curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Обновление выполнено!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 sleep 2
-if 
-echo "щас рестартну"
-
+[[ "${update}" > "1" ]] ; then
+	update='1'
+	echo $update > "/root/humancheck/update.properties" 
+	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "щас рестартну" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+fi
 }
 
 #функция для отправки ссылки на утентификацию
