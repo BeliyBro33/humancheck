@@ -101,5 +101,5 @@ if [[ "${timehours}" = "1" ]] ; then
 		done
 fi	
 echo vishel
-sleep 604
+sleep 100
 done
