@@ -67,7 +67,7 @@ function  update
 { 
 git clone https://github.com/BeliyBro33/humancheck.git
 chmod +x "/root/humancheck/main.sh"
-sudo systemctl restart human
+
 echo "Done"
 }
 
