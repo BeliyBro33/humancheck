@@ -65,10 +65,14 @@ function  time_do_verif
 #функция обновления
 function  update
 { 
-git clone https://github.com/BeliyBro33/humancheck.git
-chmod +x "/root/humancheck/main.sh"
+echo "try to update"
+cd "/root/humancheck/"
+git remote update
+git fetch --all
+git reset --hard origin/master
 
 echo "Done"
+
 }
 
 #функция для отправки ссылки на утентификацию
