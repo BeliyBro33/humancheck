@@ -70,7 +70,7 @@ get_update &
 for (( ;; )); do
 #в цикле проверяем сколько часов осталось до аутентификации
 bash "/root/humancheck/humancheck.sh"  -'/Check'
-timehours=$(sudo cat "/root/humancheck/time.properties")
+timehours=$(cat "/root/humancheck/time.properties")
 echo -e "${GREEN} $timehours часов ${NC}"
 #если времени меньше 2 часов переходим на поминутное сканирование
 if [[ "${timehours}" = "1" ]] ; then
