@@ -66,7 +66,7 @@ function  time_do_verif
 function  update
 { 
 update=$(sudo cat "/root/humancheck/update.properties")
-if [[ "${update}" = "1" ]] ; then
+if [[ "${update}" > "0" ]] ; then
 sudo rm -r  "/root/humancheck/main.sh"
 sudo rm -r  "/root/humancheck/humancheck.sh"
 sudo rm -r  "/root/humancheck/update.properties"
@@ -86,6 +86,7 @@ curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "
 sleep 2
 curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "щас рестартну" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 sleep 2
+curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update
 echo sudo systemctl restart human
 fi
 }
