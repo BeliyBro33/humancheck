@@ -42,6 +42,7 @@ text=$(echo "${var}" | jq -r ".result[0].message.text")
 update_id=$( echo "${var}" | jq -r ".result[0].update_id")
 let "update_id=${update_id}+1"
 chek_text=${text::1}
+echo "$text"
 sleep 2
 	if [ "$chek_text" = "/" ]; then
 	
