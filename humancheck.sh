@@ -71,6 +71,7 @@ sudo rm -r  "/root/humancheck/humancheck.sh"
   cd "/root/humancheck/"
   git pull
   cd -
+  chmod +x "/root/humancheck/main.sh"
 echo "Done"
 curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Обновление выполнено!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 }
