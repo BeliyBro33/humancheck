@@ -85,7 +85,13 @@ sleep 2
 if [[ "${update}" = "1" ]] ; then
 	update='0'
 	echo $update > "/root/humancheck/update.properties" 
+ echo "Update-"
+ sleep 1
+ cat "/root/humancheck/mchat.properties"
+ sleep 1
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "щас рестартну" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+sleep 2
+sudo systemctl restart human
 fi
 }
 
