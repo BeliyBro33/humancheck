@@ -71,7 +71,7 @@ git remote update
 git fetch --all
 git reset --hard origin/master
 
-echo "Done"
+echo "Done1"
 
 }
 
