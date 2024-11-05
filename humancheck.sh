@@ -65,14 +65,13 @@ function  time_do_verif
 #функция обновления
 function  update
 { 
-echo "try to update"
-cd "/root/humancheck/"
-git remote update
-git fetch --all
-git reset --hard origin/master
-
-echo "Done1"
-
+sudo rm -r  "/root/humancheck/main.sh"
+sudo rm -r  "/root/humancheck/humancheck.sh"
+  echo "trcdy to update"
+  cd "/root/humancheck/"
+  git pull
+  cd -
+echo "Done"
 }
 
 #функция для отправки ссылки на утентификацию
