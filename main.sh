@@ -100,6 +100,6 @@ if [[ "${timehours}" = "1" ]] ; then
 			sleep 60
 		done
 fi	
-echo vishel! таймаут 303 сек
-sleep 303
+echo vishel! таймаут 30 сек
+sleep 30
 done
