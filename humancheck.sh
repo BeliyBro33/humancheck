@@ -71,6 +71,9 @@ sudo rm -r  "/root/humancheck/humancheck.sh"
   sleep 1
   cd "/root/humancheck/"
   sleep 1
+  git checkout
+  git reset --hard
+   sleep 2
   git pull
   sleep 2
   cd -
