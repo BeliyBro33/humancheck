@@ -67,7 +67,7 @@ function  update
 { 
 sudo rm -r  "/root/humancheck/main.sh"
 sudo rm -r  "/root/humancheck/humancheck.sh"
-  echo "trcdy to update"
+  echo "try to update"
   cd "/root/humancheck/"
   git pull
   cd -
