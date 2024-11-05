@@ -83,7 +83,7 @@ echo "Done"
 curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Обновление выполнено!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 sleep 2
 [[ "${update}" > "1" ]] ; then
-	update='1'
+	update='0'
 	echo $update > "/root/humancheck/update.properties" 
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "щас рестартну" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 fi
