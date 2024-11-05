@@ -3,10 +3,10 @@ clear
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
-token=$(sudo cat "/root/humancheck/token.properties")
-mchat=$(sudo cat "/root/humancheck/mchat.properties")
-gendalf=$(sudo cat "/root/humancheck/gendalf.properties")
-update=$(sudo cat "/root/humancheck/update.properties")
+token=$(cat "/root/humancheck/token.properties")
+mchat=$(cat "/root/humancheck/mchat.properties")
+gendalf=$(cat "/root/humancheck/gendalf.properties")
+update=$(cat "/root/humancheck/update.properties")
 echo $update 
 sleep 5
 
