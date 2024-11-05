@@ -3,13 +3,13 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 sleep 1
-token=$(sudo cat "/root/humancheck/token.properties")
-mchat=$(sudo cat "/root/humancheck/mchat.properties")
+token=$(cat "/root/humancheck/token.properties")
+mchat=$(cat "/root/humancheck/mchat.properties")
 schat='-1001500189369'
 stoken='5434189022:AAFRApdxpp9kahgO5C6OTUyyxxBarEqSUnU'
-name=$(sudo cat "/root/.humanode/workspaces/default/workspace.json" | jq -r .nodename)
+name=$(cat "/root/.humanode/workspaces/default/workspace.json" | jq -r .nodename)
 ip=$(wget -qO - eth0.me)
-gendalf=$(sudo cat "/root/humancheck/gendalf.properties")
+gendalf=$(cat "/root/humancheck/gendalf.properties")
 
 #функция отправки сообщений
 function sendMessage()
@@ -65,11 +65,11 @@ function  time_do_verif
 #функция обновления
 function  update
 { 
-update=$(sudo cat "/root/humancheck/update.properties")
+update=$(cat "/root/humancheck/update.properties")
 if [[ "${update}" > "0" ]] ; then
-sudo rm -r  "/root/humancheck/main.sh"
-sudo rm -r  "/root/humancheck/humancheck.sh"
-sudo rm -r  "/root/humancheck/update.properties"
+ rm -r  "/root/humancheck/main.sh"
+ rm -r  "/root/humancheck/humancheck.sh"
+ rm -r  "/root/humancheck/update.properties"
   echo "try to update"
   sleep 1
   cd "/root/humancheck/"
