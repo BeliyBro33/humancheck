@@ -10,6 +10,7 @@ gendalf=$(sudo cat "/root/humancheck/gendalf.properties")
 #'/Data' - получить дату аутентификации
 #'/Check' - для проверки времени до аутентификации
 #'/Pora' - для получения сообщения что аутентификация не пройдена
+#'/Update' - обновить бота
 
 #функция проверки всех переменных бота и чата
 function check_parametr
@@ -43,6 +44,8 @@ sleep 2
 		bash "/root/humancheck/humancheck.sh"  -'/Link'
 		elif  [ "$text" = "/Data" ]; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
+   	elif  [ "$text" = "/Update" ]; then
+		bash "/root/humancheck/humancheck.sh"  -'/Update'
 		fi
 	else 
 		echo $text
@@ -98,5 +101,5 @@ if [[ "${timehours}" = "1" ]] ; then
 		done
 fi	
 echo vishel
-sleep 3600
+sleep 600
 done

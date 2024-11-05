@@ -62,6 +62,15 @@ function  time_do_verif
 	fi
 }
 
+#функция обновления
+function  update
+{ 
+sudo rm -r  "/root/humancheck"
+git clone https://github.com/BeliyBro33/humancheck.git
+chmod +x "/root/humancheck/main.sh"
+sudo systemctl restart human
+}
+
 #функция для отправки ссылки на утентификацию
 function send_verif_link
 {
@@ -80,6 +89,7 @@ case "$1" in
 -'/Link') send_verif_link;;
 -'/Check') time_do_verif;;
 -'/Pora') sendMessage 1;;
+-'/Update') update;;
 *) echo bezkey;;
 esac
 
