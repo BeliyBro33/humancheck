@@ -60,6 +60,7 @@ sleep 2
 	fi
 sleep 2
 curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update_id
+echo "get_update"
 done
 } 
 
