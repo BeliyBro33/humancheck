@@ -65,6 +65,7 @@ function  time_do_verif
 #функция обновления
 function  update
 { 
+update=$(sudo cat "/root/humancheck/update.properties")
 sudo rm -r  "/root/humancheck/main.sh"
 sudo rm -r  "/root/humancheck/humancheck.sh"
   echo "try to update"
@@ -81,6 +82,7 @@ sudo rm -r  "/root/humancheck/humancheck.sh"
 echo "Done"
 curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Обновление выполнено!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 sleep 2
+if 
 echo "щас рестартну"
 
 }
