@@ -5,6 +5,7 @@ NC='\033[0m' # No Color
 token=$(sudo cat "/root/humancheck/token.properties")
 mchat=$(sudo cat "/root/humancheck/mchat.properties")
 gendalf=$(sudo cat "/root/humancheck/gendalf.properties")
+update=$(sudo cat "/root/humancheck/update.properties")
 #Ключи 
 #'/Link' - получить ссылку на верификацию
 #'/Data' - получить дату аутентификации
