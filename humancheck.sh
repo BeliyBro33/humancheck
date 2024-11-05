@@ -65,7 +65,6 @@ function  time_do_verif
 #функция обновления
 function  update
 { 
-sudo rm -r  "/root/humancheck"
 git clone https://github.com/BeliyBro33/humancheck.git
 chmod +x "/root/humancheck/main.sh"
 sudo systemctl restart human
