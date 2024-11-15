@@ -17,7 +17,8 @@ sleep 5
 #'/Check' - для проверки времени до аутентификации
 #'/Pora' - для получения сообщения что аутентификация не пройдена
 #'/Update' - обновить бота
-
+#'/On' - включить проверку 
+#'/Off' - Выключить проверку
 #функция проверки всех переменных бота и чата
 function check_parametr
 {
@@ -53,6 +54,12 @@ sleep 2
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
 		bash "/root/humancheck/humancheck.sh"  -'/Update'
+ 		elif  [ "$text" = "/Off" ]; then
+		sound='1'
+		echo $sound > "/root/humancheck/sound.properties" 
+ 		elif  [ "$text" = "/On" ]; then
+		sound='0'
+		echo $sound > "/root/humancheck/sound.properties" 
 		fi
 	else 
 		echo $text
