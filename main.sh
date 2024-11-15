@@ -47,7 +47,7 @@ sleep 2
 	if [ "$chek_text" = "/" ]; then
 		if	 [ "$text" = "/Link" ]; then
 		bash "/root/humancheck/humancheck.sh"  -'/Link'
-		elif  [ "$text" = "/Data" ] && [ "$text" = "/data" ]  ; then
+		elif  [ "$text" = "/Data"  -a "$text" = "/data" ]  ; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
    		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
