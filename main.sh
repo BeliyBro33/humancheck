@@ -117,7 +117,7 @@ if [[ "${timehours}" = "1" ]] ; then
 		done
 		fi
   else 
-  echo $sound vkluchen mute
+  echo vkluchen mute
 fi
 echo vishel! таймаут 300 сек
 sleep 20
