@@ -120,5 +120,9 @@ if [[ "${timehours}" = "1" ]] ; then
   echo vkluchen mute
 fi
 echo vishel! таймаут 300 сек
-sleep 20
+  for (( timer=20; timer>0; timer-- ))
+        do
+               printf "* sleep for ${RED}%02d${NC} sec\r" $timer
+              sleep 1
+        done
 done
