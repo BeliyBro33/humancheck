@@ -73,12 +73,12 @@ done
 get_update &
 for (( ;; )); do
 if [[ "${sound}" = "0" ]]; then
-#в цикле проверяем сколько часов осталось до аутентификации
-bash "/root/humancheck/humancheck.sh"  -'/Check'
-timehours=$(cat "/root/humancheck/time.properties")
-echo -e "${GREEN} $timehours часов ${NC}"
-#если времени меньше 2 часов переходим на поминутное сканирование
-if [[ "${timehours}" = "1" ]] ; then
+	#в цикле проверяем сколько часов осталось до аутентификации
+	bash "/root/humancheck/humancheck.sh"  -'/Check'
+	timehours=$(cat "/root/humancheck/time.properties")
+	echo -e "${GREEN} $timehours часов ${NC}"
+	#если времени меньше 2 часов переходим на поминутное сканирование
+	if [[ "${timehours}" = "1" ]] ; then
 		#поминутное сканирование
 		for (( ;; )); do
 			datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
@@ -115,13 +115,13 @@ if [[ "${timehours}" = "1" ]] ; then
 			fi		
 			sleep 60
 		done
-		fi
-  else 
-  echo vkluchen mute
+	fi
 fi
-echo vishel! таймаут 300 сек
-  for (( timer=20; timer>0; timer-- ))
-        do
+else 
+	echo vkluchen mute
+	echo vishel! таймаут 300 сек
+	for (( timer=20; timer>0; timer-- ))
+		do
                printf "* sleep for ${RED}%02d${NC} sec\r" $timer
               sleep 1
         done
