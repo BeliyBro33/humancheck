@@ -7,6 +7,7 @@ token=$(cat "/root/humancheck/token.properties")
 mchat=$(cat "/root/humancheck/mchat.properties")
 gendalf=$(cat "/root/humancheck/gendalf.properties")
 update=$(cat "/root/humancheck/update.properties")
+sound=$(cat "/root/humancheck/sound.properties")
 echo $update 
 sleep 5
 
@@ -62,6 +63,7 @@ done
 } 
 get_update &
 for (( ;; )); do
+if [[ "${sound}" = "0" ]]; then
 #в цикле проверяем сколько часов осталось до аутентификации
 bash "/root/humancheck/humancheck.sh"  -'/Check'
 timehours=$(cat "/root/humancheck/time.properties")
@@ -104,7 +106,10 @@ if [[ "${timehours}" = "1" ]] ; then
 			fi		
 			sleep 60
 		done
-fi	
+		fi
+  else 
+  echo $sound vkluchen mute
+fi
 echo vishel! таймаут 300 сек
 sleep 300
 done
