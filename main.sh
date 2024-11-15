@@ -99,18 +99,23 @@ for (( ;; )); do
 					for (( ;; )); do
 						echo v konecnom cikle
 						sleep 300
-						datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
-						echo $datatoverif - до верификацию
-						if [[ "${datatoverif}" = "Inactive" ]] ; then
-							echo pora
-							bash "/root/humancheck/humancheck.sh"  -'/Pora'
-						else
-							curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Успех!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
-							echo  -e "${GREEN} Успех! ${NC} " 
-							gendalf='0'
-							echo $gendalf > "/root/humancheck/gendalf.properties" 
-							break 2
-						fi
+      						sound=$(cat "/root/humancheck/sound.properties")
+						if [[ "${sound}" = "0" ]]; then
+							datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
+							echo $datatoverif - до верификацию
+							if [[ "${datatoverif}" = "Inactive" ]] ; then
+								echo pora
+								bash "/root/humancheck/humancheck.sh"  -'/Pora'
+							else
+								curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Успех!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+								echo  -e "${GREEN} Успех! ${NC} " 
+								gendalf='0'
+								echo $gendalf > "/root/humancheck/gendalf.properties" 
+								break 2
+							fi
+       						else 
+	     						echo mute off
+	    					fi
 					done
 				fi		
 				sleep 60
@@ -120,9 +125,5 @@ for (( ;; )); do
 		echo vkluchen mute
 	fi
 echo vishel! таймаут 300 сек
-for (( timer=20; timer>0; timer-- ))
-	do
-		printf "* sleep for ${RED}%02d${NC} sec\r" $timer
-		sleep 1
-    done
+sleep 300
 done
