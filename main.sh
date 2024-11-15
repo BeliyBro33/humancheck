@@ -57,9 +57,11 @@ sleep 2
  		elif  [ "$text" = "/Off" ]; then
 		sound='1'
 		echo $sound > "/root/humancheck/sound.properties" 
+  		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Уведомления выключены!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
  		elif  [ "$text" = "/On" ]; then
 		sound='0'
 		echo $sound > "/root/humancheck/sound.properties" 
+  		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Уведомления включены!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 		fi
 	else 
 		echo $text
