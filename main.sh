@@ -45,11 +45,19 @@ let "update_id=${update_id}+1"
 chek_text=${text::1}
 sleep 2
 	if [ "$chek_text" = "/" ]; then
-		if	 [ "$text" = "/Link" ]; then
+		if [ "$text" = "/Link" ]; then
+		bash "/root/humancheck/humancheck.sh"  -'/Link'
+  		elif  [ "$text" = "/link" ]; then
 		bash "/root/humancheck/humancheck.sh"  -'/Link'
 		elif  [ "$text" = "/Data" ]  ; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
+  		elif  [ "$text" = "/data" ]  ; then
+		bash "/root/humancheck/humancheck.sh"  -'/Data'
    		elif  [ "$text" = "/Update" ]; then
+   		update=$update_id
+		echo $update > "/root/humancheck/update.properties"
+		bash "/root/humancheck/humancheck.sh"  -'/Update'
+  		elif  [ "$text" = "/update" ]; then
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
 		bash "/root/humancheck/humancheck.sh"  -'/Update'
@@ -57,7 +65,15 @@ sleep 2
 		sound='1'
 		echo $sound > "/root/humancheck/sound.properties" 
   		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Уведомления выключены!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+    		elif  [ "$text" = "/off" ]; then
+		sound='1'
+		echo $sound > "/root/humancheck/sound.properties" 
+  		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Уведомления выключены!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
  		elif  [ "$text" = "/On" ]; then
+		sound='0'
+		echo $sound > "/root/humancheck/sound.properties" 
+  		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Уведомления включены!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+    		elif  [ "$text" = "/on" ]; then
 		sound='0'
 		echo $sound > "/root/humancheck/sound.properties" 
   		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Уведомления включены!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
@@ -109,6 +125,7 @@ for (( ;; )); do
 							else
 								curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Успех!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 								echo  -e "${GREEN} Успех! ${NC} " 
+								curl -F chat_id=$mchat -F document=@"/root/humancheck/uspeh.gif" https://api.telegram.org/bot$token/sendDocument
 								gendalf='0'
 								echo $gendalf > "/root/humancheck/gendalf.properties" 
 								break 2
