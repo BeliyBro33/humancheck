@@ -18,7 +18,7 @@ if [[ "${1}" = "1" ]]; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Аутентификация не пройдена!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
 		sleep 1
 		if [[ "${gendalf}" = "0" ]]; then
-		curl -F chat_id=$mchat -F document=@"/root/humancheck/notactive.gif" https://api.telegram.org/bot$token/sendDocument
+		curl -F chat_id=$mchat -F document=@"/root/humancheck/notactive.jpg" https://api.telegram.org/bot$token/sendDocument
 		gendalf='1'
 		echo $gendalf > "/root/humancheck/gendalf.properties" 
 		fi
