@@ -55,9 +55,12 @@ sleep 2
   		elif  [ "$text" = "/data" ]  ; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
   		elif  [ "$text" = "/Rega" ]  ; then
-		bash "/root/humancheck/humancheck.sh"  -'/Rega'
+		mchat=$(echo "${var}" | jq -r ".result[0].message.text") 
+ 		echo $mchat > "/root/humancheck/mchat.properties"
+   		echo $mchat " - это ид чата?"	
   		elif  [ "$text" = "/rega" ]  ; then
-		bash "/root/humancheck/humancheck.sh"  -'/Rega'
+		mchat=$(echo "${var}" | jq -r ".result[0].message.text") 
+ 		echo $mchat > "/root/humancheck/mchat.properties"
    		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
