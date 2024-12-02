@@ -39,6 +39,7 @@ function get_update
 {
 for (( ;; )); do
 var=$( curl -s https://api.telegram.org/bot$token/getUpdates )
+echo $var
 text=$(echo "${var}" | jq -r ".result[0].message.text") 
 update_id=$( echo "${var}" | jq -r ".result[0].update_id")
 let "update_id=${update_id}+1"
