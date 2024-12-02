@@ -95,7 +95,7 @@ sleep 2
 		echo $text
 	fi
 sleep 2
-curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update_id
+# curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update_id
 done
 } 
 get_update &
