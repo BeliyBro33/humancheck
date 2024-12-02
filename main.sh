@@ -59,11 +59,13 @@ sleep 2
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
      		sleep 2
+       		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Привязка выполнена!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
      		elif  [ "$text" = "/rega" ]  ; then
 		mchat=$(echo "${var}" |  jq -r ".result[0].message.chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
     		sleep 2
+      		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Привязка выполнена!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
      		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
