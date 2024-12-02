@@ -55,18 +55,16 @@ sleep 2
   		elif  [ "$text" = "/data" ]  ; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
   		elif  [ "$text" = "/Rega" ]  ; then
-		mchat=$(echo "${var}" | jq -r ".result[1].Chat.id") 
+		mchat=$(echo "${var}" |  jq -r ".result[0].message.chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
      		sleep 2
-     		
-  		elif  [ "$text" = "/rega" ]  ; then
-		mchat=$(echo "${var}" | jq -r ".result[1].Chat.id") 
+     		elif  [ "$text" = "/rega" ]  ; then
+		mchat=$(echo "${var}" |  jq -r ".result[0].message.chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
-    		 sleep 2
-     		
-   		elif  [ "$text" = "/Update" ]; then
+    		sleep 2
+     		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
 		bash "/root/humancheck/humancheck.sh"  -'/Update'
@@ -95,7 +93,7 @@ sleep 2
 		echo $text
 	fi
 sleep 2
-# curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update_id
+curl -s https://api.telegram.org/bot$token/getUpdates?offset=$update_id
 done
 } 
 get_update &
