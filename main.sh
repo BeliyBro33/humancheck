@@ -16,6 +16,7 @@ sleep 5
 #'/Check' - для проверки времени до аутентификации
 #'/Pora' - для получения сообщения что аутентификация не пройдена
 #'/Update' - обновить бота
+#'/Rega' - привязать к чату
 #'/On' - включить проверку 
 #'/Off' - Выключить проверку
 #функция проверки всех переменных бота и чата
@@ -53,6 +54,10 @@ sleep 2
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
   		elif  [ "$text" = "/data" ]  ; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
+  		elif  [ "$text" = "/Rega" ]  ; then
+		bash "/root/humancheck/humancheck.sh"  -'/Rega'
+  		elif  [ "$text" = "/rega" ]  ; then
+		bash "/root/humancheck/humancheck.sh"  -'/Rega'
    		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
