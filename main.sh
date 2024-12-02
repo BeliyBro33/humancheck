@@ -16,7 +16,6 @@ sleep 5
 #'/Check' - для проверки времени до аутентификации
 #'/Pora' - для получения сообщения что аутентификация не пройдена
 #'/Update' - обновить бота
-#'/Rega' - привязать к чату
 #'/On' - включить проверку 
 #'/Off' - Выключить проверку
 #функция проверки всех переменных бота и чата
@@ -55,12 +54,15 @@ sleep 2
   		elif  [ "$text" = "/data" ]  ; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
   		elif  [ "$text" = "/Rega" ]  ; then
-		mchat=$(echo "${var}" | jq -r ".result[0].message.text") 
+		mchat=$(echo "${var}" | jq -r ".result[0].Chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
+     		sudo systemctl restart human
   		elif  [ "$text" = "/rega" ]  ; then
-		mchat=$(echo "${var}" | jq -r ".result[0].message.text") 
+		mchat=$(echo "${var}" | jq -r ".result[0].Chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
+   		echo $mchat " - это ид чата?"	
+     		sudo systemctl restart human
    		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
