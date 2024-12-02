@@ -58,13 +58,13 @@ sleep 2
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
      		sleep 2
-     		sudo systemctl restart human
+     		
   		elif  [ "$text" = "/rega" ]  ; then
 		mchat=$(echo "${var}" | jq -r ".result[1].Chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
     		 sleep 2
-     		sudo systemctl restart human
+     		
    		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
 		echo $update > "/root/humancheck/update.properties"
