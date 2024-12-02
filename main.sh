@@ -54,14 +54,16 @@ sleep 2
   		elif  [ "$text" = "/data" ]  ; then
 		bash "/root/humancheck/humancheck.sh"  -'/Data'
   		elif  [ "$text" = "/Rega" ]  ; then
-		mchat=$(echo "${var}" | jq -r ".result[0].Chat.id") 
+		mchat=$(echo "${var}" | jq -r ".result[1].Chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
+     		sleep 2
      		sudo systemctl restart human
   		elif  [ "$text" = "/rega" ]  ; then
-		mchat=$(echo "${var}" | jq -r ".result[0].Chat.id") 
+		mchat=$(echo "${var}" | jq -r ".result[1].Chat.id") 
  		echo $mchat > "/root/humancheck/mchat.properties"
    		echo $mchat " - это ид чата?"	
+    		 sleep 2
      		sudo systemctl restart human
    		elif  [ "$text" = "/Update" ]; then
    		update=$update_id
