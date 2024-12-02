@@ -104,6 +104,14 @@ else
 fi
 }
 
+function registration
+{
+curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Регистрация выполнена!" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
+sleep 2
+sudo systemctl restart human
+}
+
+
 case "$1" in 
 -'/Data') sendMessage 3;;
 -'/Link') send_verif_link;;
