@@ -25,7 +25,7 @@ if [[ "${1}" = "1" ]]; then
 elif  [[ "${1}" = "2" ]] ; then
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Тревога! Волк унес зайчат (статус не получен) '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
 elif  [[ "${1}" = "3" ]] ; then
-	datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
+	datatoverif=$(curl -s -X POST http://localhost:9944  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
 	if [[ "${datatoverif}" = "Inactive" ]] ; then
 		message=1
 		sendMessage $message
@@ -33,7 +33,7 @@ elif  [[ "${1}" = "3" ]] ; then
 		message=2
 		sendMessage $message
 	else 
-	timeverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
+	timeverif=$(curl -s -X POST http://localhost:9944  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
 	let "timeverif=${timeverif}/1000"
 	timeverif=$(TZ='Europe/Moscow' date -d @$timeverif   +%d%t%B%t%T )
 	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$mchat"'", "text": "Следующая аутентификации будет '"$timeverif"'" "disable_notification": false}' https://api.telegram.org/bot$token/sendMessage
@@ -44,7 +44,7 @@ fi
 #функция проверки времени до аутентификации
 function  time_do_verif
 { 
-	datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
+	datatoverif=$(curl -s -X POST http://localhost:9944  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
 	if [[ "${datatoverif}" = "Inactive" ]] ; then
 		message=1
 		sendMessage $message
@@ -52,7 +52,7 @@ function  time_do_verif
 		message=2
 		sendMessage $message
 	else 
-		datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
+		datatoverif=$(curl -s -X POST http://localhost:9944  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
 		let "datatoverif=${datatoverif}/1000"
 		datatoverif=$(TZ='Europe/Moscow' date -d @$datatoverif  +%s )
 		sleep 1
