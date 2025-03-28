@@ -110,7 +110,7 @@ for (( ;; )); do
 		if [[ "${timehours}" = "1" ]] ; then
 			#поминутное сканирование
 			for (( ;; )); do
-				datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
+				datatoverif=$(curl -s -X POST http://localhost:9944  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result.Active.expires_at)
 				let "datatoverif=${datatoverif}/1000"
 				datatoverif=$(TZ='Europe/Moscow' date -d @$datatoverif  +%s )
 				datenow=$(TZ='Europe/Moscow' date  +%s)
@@ -130,7 +130,7 @@ for (( ;; )); do
 						sleep 300
       						sound=$(cat "/root/humancheck/sound.properties")
 						if [[ "${sound}" = "0" ]]; then
-							datatoverif=$(curl -s -X POST http://localhost:9933  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
+							datatoverif=$(curl -s -X POST http://localhost:9944  -H "Content-Type: application/json"  -d '{"jsonrpc": "2.0","id": 1,"method": "bioauth_status","params": []}'| jq -r .result)
 							echo $datatoverif - до верификацию
 							if [[ "${datatoverif}" = "Inactive" ]] ; then
 								echo pora
