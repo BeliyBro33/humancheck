@@ -40,17 +40,17 @@ for (( ;; )); do
 time=$( TZ='Europe/Moscow'  date +%H) 
 echo $time
 if   [ $time -ge "8" ] && [  $time -le "21"  ]; then
-    usep=$(df -h | awk '{ print $5}' | cut -d'%' -f1)
-   usep=$( echo $usep | awk '{ print $4}')
-   echo $usep
-      if [ $usep -ge $ALERT ]; then
-       echo "Тревога! Место на диске закончилось! " 
-    	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Место на диске закончилось!Занято '"$usep"'%   '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
-     else
-     echo "Режим тишины" 
+    	usep=$(df -h | awk '{ print $5}' | cut -d'%' -f1)
+	usep=$( echo $usep | awk '{ print $4}')
+  	echo $usep
+      	if [ $usep -ge $ALERT ]; then
+       		echo "Тревога! Место на диске закончилось! " 
+    		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Место на диске закончилось!Занято '"$usep"'%   '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
      	fi
-      fi
- echo vishel proverka mesta! таймаут 3600 сек
+else
+     echo "Режим тишины" 
+fi
+echo vishel proverka mesta! таймаут 3600 сек
 sleep 3600
 done
 }
