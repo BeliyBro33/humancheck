@@ -39,7 +39,7 @@ ALERT=95
 for (( ;; )); do
 time=$( TZ='Europe/Moscow'  date +%H) 
 echo $time
-if   [ $time -gt "12" ] && [  $time -lt "15"  ]; then
+if   [ $time -ge "8" ] && [  $time -le "21"  ]; then
     usep=$(df -h | awk '{ print $5}' | cut -d'%' -f1)
    usep=$( echo $usep | awk '{ print $4}')
    echo $usep
