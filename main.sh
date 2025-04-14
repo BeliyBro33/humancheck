@@ -7,6 +7,8 @@ token=$(cat "/root/humancheck/token.properties")
 mchat=$(cat "/root/humancheck/mchat.properties")
 gendalf=$(cat "/root/humancheck/gendalf.properties")
 update=$(cat "/root/humancheck/update.properties")
+ip=$(wget -qO - eth0.me)
+name=$(cat "/root/.humanode/workspaces/default/workspace.json" | jq -r .nodename)
 echo $update 
 sleep 5
 
@@ -35,22 +37,23 @@ function check_parametr
 check_parametr
 function get_disk_space
 {
-ALERT=95
+ALERT=98
 for (( ;; )); do
 time=$( TZ='Europe/Moscow'  date +%H) 
 echo $time
-if   [ $time -ge "8" ] && [  $time -le "20"  ]; then
-    	usep=$(df -h | awk '{ print $5}' | cut -d'%' -f1)
-	usep=$( echo $usep | awk '{ print $4}')
-  	echo $usep
-      	if [ $usep -ge $ALERT ]; then
-       		echo "Тревога! Место на диске закончилось! " 
-    		curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Место на диске закончилось!Занято '"$usep"'%   '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
-     	fi
-else
+if   [ $time -ge "8" ] && [  $time -le "21"  ]; then
+    usep=$(df -h | awk '{ print $5}' | cut -d'%' -f1)
+   usep=$( echo $usep | awk '{ print $4}')
+   echo $usep
+      if [ $usep -ge $ALERT ]; then
+       echo "Тревога! Место на диске закончилось! " 
+    	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Место на диске закончилось! Занято '"$usep"'% '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
+     fi
+     else
      echo "Режим тишины" 
-fi
-echo vishel proverka mesta! таймаут 3600 сек
+     	
+      fi
+ echo vishel proverka mesta! таймаут 3600 сек
 sleep 3600
 done
 }
