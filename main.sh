@@ -53,7 +53,7 @@ if   [ $time -ge "8" ] && [  $time -le "21"  ]; then
     usep=$(df -h / | awk '{ print $5}' | cut -d'%' -f1)
    usep=$( echo $usep | awk '{ print $2}')
    echo $usep
-	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "-1001500189369", "text": "Почистил логи стало'"$usep"'% '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot5434189022:AAFRApdxpp9kahgO5C6OTUyyxxBarEqSUnU/sendMessage
+	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "-1001500189369", "text": "Почистил логи, стало - '"$usep"'%  '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot5434189022:AAFRApdxpp9kahgO5C6OTUyyxxBarEqSUnU/sendMessage
      fi
      else
      echo "Режим тишины" 
