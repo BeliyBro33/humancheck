@@ -47,7 +47,7 @@ if   [ $time -ge "8" ] && [  $time -le "21"  ]; then
    echo $usep
       if [ $usep -ge $ALERT ]; then
        echo "Тревога! Место на диске закончилось! " 
-    	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "'"$schat"'", "text": "Тревога! Место на диске закончилось! Занято '"$usep"'% '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot$stoken/sendMessage
+    	curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "-1001500189369", "text": "Тревога! Место на диске закончилось! Занято '"$usep"'% '"$ip"' '"$name"'" "disable_notification": false}' https://api.telegram.org/bot5434189022:AAFRApdxpp9kahgO5C6OTUyyxxBarEqSUnU/sendMessage
      fi
      else
      echo "Режим тишины" 
